@@ -3,10 +3,11 @@ import { LLMAnthropic } from "./anthropic";
 import { LLMGoogle } from "./google";
 import type { LLM } from "./llm";
 import { LLMOpenAI } from "./openai";
+import { LLMOpenRouter } from "./openrouter";
 import { LLMStub } from "./stub";
 
 export function createLLM(settings: LLMConfig): LLM {
-  const { provider, openai, anthropic, google } = settings;
+  const { provider, openai, anthropic, google, openrouter } = settings;
   if (provider === "openai") {
     return new LLMOpenAI(openai);
   }
@@ -15,6 +16,9 @@ export function createLLM(settings: LLMConfig): LLM {
   }
   if (provider === "google") {
     return new LLMGoogle(google);
+  }
+  if (provider === "openrouter") {
+    return new LLMOpenRouter(openrouter);
   }
   if (provider === "stub") {
     return new LLMStub(settings.stub.response);

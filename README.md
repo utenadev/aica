@@ -71,6 +71,11 @@ export OPENAI_MODEL=o3-mini
 export AICA_LLM_PROVIDER=google
 export GOOGLE_API_KEY=your_api_key
 export GOOGLE_MODEL=gemini-2.0-flash
+
+# OpenRouter
+export AICA_LLM_PROVIDER=openrouter
+export OPENROUTER_API_KEY=your_api_key
+export OPENROUTER_MODEL=qwen/qwen3-coder:free
 ```
 
 ## Configuration

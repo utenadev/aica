@@ -3,7 +3,12 @@ import { GitRepository } from "./git";
 import type { OpenAIReasoningEffort } from "./llm/openai";
 import { deepAssign } from "./utility/deep-assign";
 
-export type LLMProvider = "openai" | "anthropic" | "stub" | "google";
+export type LLMProvider =
+  | "openai"
+  | "anthropic"
+  | "stub"
+  | "google"
+  | "openrouter";
 
 export type LLMConfigOpenAI = {
   model: string;
@@ -30,11 +35,20 @@ export type LLMConfigGemini = {
   logFile: string | undefined;
 };
 
+export type LLMConfigOpenRouter = {
+  model: string;
+  apiKey: string;
+  temperature: number;
+  maxTokens: number;
+  logFile: string | undefined;
+};
+
 export type LLMConfig = {
   provider: LLMProvider;
   openai: LLMConfigOpenAI;
   anthropic: LLMConfigAnthropic;
   google: LLMConfigGemini;
+  openrouter: LLMConfigOpenRouter;
   stub: {
     response: string;
   };
@@ -130,6 +144,9 @@ const getDefaultLLMProvider = (): LLMProvider => {
   if (Bun.env.OPENAI_API_KEY) {
     return "openai";
   }
+  if (Bun.env.OPENROUTER_API_KEY) {
+    return "openrouter";
+  }
   if (Bun.env.GOOGLE_API_KEY || Bun.env.GEMINI_API_KEY) {
     return "google";
   }
@@ -161,6 +178,13 @@ export const defaultConfig: Config = {
       temperature: 0.5,
       maxTokens: 8000,
       logFile: Bun.env.GOOGLE_LOG_FILE || undefined,
+    },
+    openrouter: {
+      model: Bun.env.OPENROUTER_MODEL || "google/gemini-flash-1.5",
+      apiKey: Bun.env.OPENROUTER_API_KEY || "",
+      temperature: 0.5,
+      maxTokens: 8000,
+      logFile: Bun.env.OPENROUTER_LOG_FILE || undefined,
     },
     stub: {
       response: "",

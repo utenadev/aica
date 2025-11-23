@@ -1,6 +1,6 @@
 [llm]
-# provider = 'openai' | 'anthropic' | 'google'
-provider = 'anthropic'
+# provider = 'openai' | 'anthropic' | 'google' | 'openrouter'
+provider = 'openrouter'
 
 [llm.openai]
 model = 'o4-mini'
@@ -20,6 +20,12 @@ model = 'gemini-2.0-flash'
 temperature = 0.5
 maxTokens = 8000
 # logFile = '/path/to/google.log'  # Optional: Path to log Google API calls
+
+[llm.openrouter]
+model = 'qwen/qwen3-coder:free'
+temperature = 0.5
+maxTokens = 8000
+# logFile = '/path/to/openrouer.log'  # Optional: Path to log openrouer API calls
 
 [rules]
 # search .cursor/rules/*.mdc and include a file in the context if the file matches the pattern.
