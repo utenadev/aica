@@ -27,7 +27,7 @@ describe("LLMOpenRouter", () => {
           headers: { "Content-Type": "application/json" },
         }),
       ),
-    ) as typeof fetch & { mock: Mock<typeof fetch> };
+    );
     global.fetch = fetchMock;
 
     const llm = new LLMOpenRouter(config);
@@ -39,8 +39,7 @@ describe("LLMOpenRouter", () => {
 
     expect(result).toBe("Hello, world!");
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    const fetchCall = (global.fetch as { mock: { calls: any[] } }).mock
-      .calls[0];
+    const fetchCall = fetchMock.mock.calls[0];
     const fetchUrl = fetchCall[0];
     const fetchOptions = fetchCall[1] as RequestInit;
 
